@@ -1,0 +1,5 @@
+name: SPRINT2
+channels:
+  - conda-forge
+dependencies:
+  - python==3.12.0
