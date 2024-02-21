@@ -1,0 +1,75 @@
+[build-system]
+# Specify required dependencies for the build system
+requires = ["setuptools>=69.0", "setuptools_scm[toml]>=6.2"]
+# Specify the build backend to use
+build-backend = "setuptools.build_meta"
+
+# Project metadata
+[project]
+name = "sprint2"
+dynamic = ["version"]  # Use dynamic version based on the setuptools_scm plugin
+description = "Sends get request to Ensembl's Variant Effect Predictor Rest API using either Ensembl's variant identifiers or Refseq variant description "
+license = {file = "LICENSE.txt"}  # Specify the license file
+authors = [{name = "Kenny Oyesola", email = "kehindeoyesola@outlook.com"}]  # Author information
+readme = "README.md"  # Specify the README file
+requires-python = ">=3.12"  # Minimum required Python version
+keywords = ["variant Recoder",
+        "Ensembl",
+        "Variant Validator",
+        "Variant Effect Predictor",
+        "hgvsg",
+        "transcript variants",
+        "variant alleles"]  # Keywords associated with the project
+
+# List of project dependencies
+dependencies = [
+    "httpx",
+    "dicttoxml==1.7.16",
+    "requests==2.31.0",
+]
+
+#list of optional dependencies
+#[project.optional-dependencies]
+#test = ["pytest < 5.0.0", "pytest-cov[all]"]
+#doc = ["sphinx"]
+
+# Project classifiers
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Bioinformaticians",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License"]
+
+# URLs associated with the project
+[project.urls]
+"Source" = "https://github.com/0m0kenny/sprint2"
+"Bug Reports" = "https://github.com/0m0kenny/sprint2/issues"
+"Documentation" = "https://readthedocs.org"
+
+
+
+[scripts]
+# Define scripts that will be available after installation, with their entry points
+# After install, these scripts will be accessible for the user to run
+my_app = "application.__main__.py:Redirect()"
+
+
+
+
+# Setuptools configuration
+[tool.setuptools]
+# Specify the main Python modules to be included in the distribution
+py-modules = ["sprint2"]
+
+# Setuptools SCM configuration
+[tool.setuptools_scm]
+
+# Setuptools package discovery configuration
+[tool.setuptools.packages.find]
+# Define where to look for packages (root directory)
+where = ["."]
+# Specify patterns to include and exclude for package discovery
+include = ["sprint2*"]
+exclude = ["tests"]
+
