@@ -1,10 +1,42 @@
 import requests
 from get_functions import get_VEP, get_VR, get_VV
 from helper_functions import user_input, get_requests, get_allele, get_hgvsg
+import logging
+from logging import handlers
+
+
+
+
+
+#configure logger
+logging.basicConfig(filename= "applog.log", level=logging.DEBUG, format="%(levelname)s -- %(asctime)s -- %(funcName)s -- %(message)s" )
+#create logger object for main script
+logger_main = logging.getLogger(__name__)
+
+#create rotating file handler to use disk space more efficiently
+file_handler = handlers.RotatingFileHandler('applog.log', maxBytes=500000, backupCount=2)
+file_handler.setLevel(logging.DEBUG)
+logger_main.addHandler(file_handler)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def Redirect():
-    '''allows variant recoder function to be called based on user input'''
+    '''allows variant recoder function to be called based on user input'''  
+    #create logger info message once script is run
+    logger_main.info('Starting Application')
     while True:    
         datatype = user_input.datatype()
         species = user_input.species()
@@ -43,23 +75,24 @@ def Redirect():
             return response        
                    
         #vv does not raise httperror if wrong variant/selecttranscript entered because status code still 200.        
-        except KeyError: #key error raised for vv response if the variant key is not found in the response dict
+        except KeyError as error: #key error raised for vv response if the variant key is not found in the response dict
             print(f"\n --- Error: The variant '{variant}' and/or select_transcript '{select_transcripts}' you entered is not valid.", 
                     '\n --- Please make sure your entries are correct and try again below ---\n')
-                                   
+            logger_main.exception('Unable to find variant/selecttranscript in response')                      
             continue #allows the user to start from the begining without exiting/terminating the program
 
         except requests.exceptions.ConnectionError: #raise exception for no internet
             print('--A connection error or timeout occurred, please check your internet connection and try again---')
-  
+            logger_main.excpetion('Connection/Timeout error')
             continue  
                          
         except  requests.exceptions.HTTPError: #raises exception for error 400 from vr or vep
             print(f"\n --- Error code: {response.status_code} ", '\n --------', response.json(), 
                       '\n --- Please make sure your entry is correct and try again below ---\n')
-             
+            logger_main.exception(f'HTTPError: {response.status_code}. Species/variant entered is wrong' )
             continue     
-    
+#create logger info message once script is finished
+logger_main.info('Finished')
     
         
 if __name__ == "__main__":

@@ -1,3 +1,10 @@
+import logging
+
+logger_datatype = logging.getLogger('datatype_input')
+logger_genome_build = logging.getLogger('genome_build_input')
+logger_allele = logging.getLogger('allele_input')
+
+
 def datatype():
         '''ask user to input for the type of variant description user has '''
         while True:
@@ -7,6 +14,7 @@ def datatype():
                         break
                 else: 
                         print(f"\n---Error: your entry '{datatype}' not valid. Please enter either E or R only---")
+                        logger_datatype.error('user input invalid')
                         continue
                 
         return datatype
@@ -32,6 +40,7 @@ def genomebuild():
                         break 
                 else:
                         print(f"\n--- Error: The genome build {genome_build} you have entered is not valid. Please try again---")
+                        logger_genome_build.error('user input invalid')
                         continue
         return genome_build
    
@@ -55,5 +64,6 @@ def allele(no_of_allele, keys, variant):
                         break 
                 else:
                         print(f"\n---Error: Your entry '{input_allele}' is not valid. Please try again below---")
+                        logger_allele.error('user input invalid')
                         continue
         return allele
