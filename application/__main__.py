@@ -1,7 +1,7 @@
 import requests
 from get_functions import get_VEP, get_VR, get_VV
 from helper_functions import user_input, get_requests, get_allele, get_hgvsg
-import sys
+
 
 def Redirect():
     '''allows variant recoder function to be called based on user input'''
@@ -16,11 +16,11 @@ def Redirect():
                 response = get_VR.VariantRecorder(species, variant) 
                 response.raise_for_status() # Raises an exception for unsuccessful HTTP status codes        
                        
-                content = response.json()                  
-                allele_list = get_allele.get_allele(content, variant, species) #gets the variant allele in the response
-                    
-                no_of_allele = len(allele_list)
-                allele_choice = user_input.allele(no_of_allele, allele_list, variant) #asks user to choose which allele to get vep for from list of allele present
+                content = response.json()
+                                 
+                allele_list = get_allele.get_allele(content) #gets the variant allele in the response
+
+                allele_choice = user_input.allele(len(allele_list), allele_list, variant) #asks user to choose which allele to get vep for from list of allele present
                 hgvsg = get_hgvsg.get_hgvsg(allele_choice, content) #iterate over content to get the hgvsg value
                         
             elif datatype == 'R' or datatype == 'r':       
@@ -32,21 +32,20 @@ def Redirect():
                 content = response.json() #returns a nested dict
                 
                 #loops through the dict to find the value hgvsg using the expected response structure                        
-                key = content[variant]['primary_assembly_loci'][genome_build]
+                key = content[variant]['primary_assembly_loci'][genome_build] #raises a key error if key not found in response
                 hgvsg = list(key.items())[0][1]
         
             #collects species enetered by user and hgvsg data collected from vr or vv and sends to vep 
             response = get_VEP.VariantEPredictor(species, hgvsg)
             content = response.json()
-            if response.status_code == 400: #catches any error not caught by other exceptions
-                print(response.text)
-            #response.raise_for_status() 
-            else:
-                   return response                   
-                
-        except KeyError: #raises a key error for vv response if the variant key is not found in the response dict
-            print(f'''---Error: The variant '{variant}' / transcript '{select_transcripts}' you entered is not valid. 
-        Please make sure the variant description is from Refseq and transcript is correct and try again---''')
+            response.raise_for_status()
+            
+            return response        
+                   
+        #vv does not raise httperror if wrong variant/selecttranscript entered because status code still 200.        
+        except KeyError: #key error raised for vv response if the variant key is not found in the response dict
+            print(f"\n --- Error: The variant '{variant}' and/or select_transcript '{select_transcripts}' you entered is not valid.", 
+                    '\n --- Please make sure your entries are correct and try again below ---\n')
                                    
             continue #allows the user to start from the begining without exiting/terminating the program
 
@@ -55,13 +54,10 @@ def Redirect():
   
             continue  
                          
-        except  requests.exceptions.HTTPError: #raises exception for error 400
-            if datatype == 'E' or datatype == 'e':
-                print(f'''---Error: The variant '{variant}' and/or species '{species}' you entered is not valid. 
-                    Please make sure you entered the right variant identifier and/or species---''')
-            elif datatype == 'R' or datatype == 'r':
-                print(f'''---Error: The variant {variant} / transcript {select_transcripts} / species '{species}' you entered is not valid. 
-                    Please make sure the variant description is from Refseq and the species / transcript is correct and try again---''')
+        except  requests.exceptions.HTTPError: #raises exception for error 400 from vr or vep
+            print(f"\n --- Error code: {response.status_code} ", '\n --------', response.json(), 
+                      '\n --- Please make sure your entry is correct and try again below ---\n')
+             
             continue     
     
     
