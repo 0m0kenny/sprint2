@@ -1,9 +1,9 @@
 import requests
 from get_functions import get_VEP, get_VR, get_VV
-from helper_functions import user_input, get_requests, get_allele, get_hgvsg
+from helper_functions import user_input, get_requests, get_allele, get_hgvsg, representations
 import logging
 from logging import handlers
-
+import dicttoxml
 
 
 
@@ -17,7 +17,7 @@ logger_main = logging.getLogger(__name__)
 file_handler = handlers.RotatingFileHandler('applog.log', maxBytes=500000, backupCount=2)
 file_handler.setLevel(logging.DEBUG)
 logger_main.addHandler(file_handler)
-
+dicttoxml.LOG.setLevel(logging.ERROR) #dicttoxml generates too much info tags so set log level to error to avoid this 
 
 
 
@@ -69,9 +69,9 @@ def Redirect():
         
             #collects species enetered by user and hgvsg data collected from vr or vv and sends to vep 
             response = get_VEP.VariantEPredictor(species, hgvsg)
-            content = response.json()
             response.raise_for_status()
-            
+            content = response.json()
+
             return response        
                    
         #vv does not raise httperror if wrong variant/selecttranscript entered because status code still 200.        
@@ -99,13 +99,22 @@ if __name__ == "__main__":
     
     response = Redirect()
 
-    #print(type(response))
+    
     print('-\n-----------------------------------RESULTS---------------------------------------------------\n')
     print('\n---------status code-------------\n',  '\n', response.status_code)
-    print('\n----------headers-------------\n','\n', response.headers)
-    print('\n---------text---------------\n','\n', response.text)
-    print('\n-----------json----------\n', '\n', response.json()) 
     print('\n-----------url----------\n', '\n', response.url)
-  
-  
+    contenttype = user_input.content_type()
+    if contenttype == 'application/json':
+        print('\n----------headers-------------\n','\n', response.headers)
+        print('\n-----------json----------\n', '\n', response.json())  
+    elif contenttype == 'text/xml':
+        content = response.json()
+        response.headers['content-type'] = 'text/xml'
+        representations.text_xml(response, 200)
+        print('\n----------headers-------------\n','\n', response.headers)
+        print('\n-----------text/xml----------\n', '\n', content)
+    else:
+        print('\n----------headers-------------\n','\n', response.headers)
+        print('\n---------text---------------\n','\n', response.text)
+ 
 
