@@ -70,6 +70,6 @@ py-modules = ["sprint2"]
 # Define where to look for packages (root directory)
 where = ["."]
 # Specify patterns to include and exclude for package discovery
-include = ["sprint2*"]
+include = ["application*"]
 exclude = ["tests"]
 

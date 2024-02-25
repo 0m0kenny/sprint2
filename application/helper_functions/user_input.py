@@ -3,6 +3,7 @@ import logging
 logger_datatype = logging.getLogger('datatype_input')
 logger_genome_build = logging.getLogger('genome_build_input')
 logger_allele = logging.getLogger('allele_input')
+logger_content_type = logging.getLogger('content_type')
 
 
 def datatype():
@@ -40,7 +41,7 @@ def genomebuild():
                         break 
                 else:
                         print(f"\n--- Error: The genome build {genome_build} you have entered is not valid. Please try again---")
-                        logger_genome_build.error('user input invalid')
+                        logger_genome_build.error('User input invalid')
                         continue
         return genome_build
    
@@ -67,3 +68,16 @@ def allele(no_of_allele, keys, variant):
                         logger_allele.error('user input invalid')
                         continue
         return allele
+def content_type():
+        '''ask user to enter what contenttype to return data'''
+        while True:
+                choices = ['application/json', 'text/xml', 'text']
+                content_type = input(f'''\n--- Response Successful! How should the data be returned?
+                             Please select from the following options {choices}: ''') 
+                if content_type in choices:
+                        break
+                else:
+                        print(f"\n---Error: Your entry '{content_type}' is not valid. Please try again below---")
+                        logger_content_type.error('user input invalid')
+                        continue
+        return content_type
