@@ -41,7 +41,7 @@ def genomebuild():
                         break 
                 else:
                         print(f"\n--- Error: The genome build {genome_build} you have entered is not valid. Please try again---")
-                        logger_genome_build.error('user input invalid')
+                        logger_genome_build.error('User input invalid')
                         continue
         return genome_build
    
