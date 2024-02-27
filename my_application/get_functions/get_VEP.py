@@ -5,4 +5,4 @@ def VariantEPredictor(species, hgvs_notation): #allows options to be optional
 
         url = f"https://rest.ensembl.org/vep/{species}/hgvs/{hgvs_notation}/"
         
-        return get_requests.request_vepdata(url)
+        return get_requests.request_vepdata(url) 
