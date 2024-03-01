@@ -29,9 +29,9 @@ dependencies = [
 ]
 
 #list of optional dependencies
-#[project.optional-dependencies]
-#test = ["pytest < 5.0.0", "pytest-cov[all]"]
-#doc = ["sphinx"]
+[project.optional-dependencies]
+test = ["pytest == 8.0.2", "pytest-cov[all]"]
+
 
 # Project classifiers
 classifiers = [
@@ -52,7 +52,7 @@ classifiers = [
 [scripts]
 # Define scripts that will be available after installation, with their entry points
 # After install, these scripts will be accessible for the user to run
-my_app = "application.__main__.py:Redirect()"
+my_app = "my_application.__main__.py:Redirect()"
 
 
 
@@ -60,16 +60,24 @@ my_app = "application.__main__.py:Redirect()"
 # Setuptools configuration
 [tool.setuptools]
 # Specify the main Python modules to be included in the distribution
-py-modules = ["sprint2"]
+py-modules = ["my_application"]
 
 # Setuptools SCM configuration
 [tool.setuptools_scm]
+
+#set up automated tests
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report html --cov-report term-missing --cov-fail-under 95"
+
+#directory to do tests
+[tool.coverage.run]
+source = ["my_application"]
 
 # Setuptools package discovery configuration
 [tool.setuptools.packages.find]
 # Define where to look for packages (root directory)
 where = ["."]
 # Specify patterns to include and exclude for package discovery
-include = ["application*"]
+include = ["my_application*"]
 exclude = ["tests"]
 
