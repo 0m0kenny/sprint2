@@ -10,7 +10,7 @@ class TestVR(unittest.TestCase):
         def test_vr_class(self):
         
         # Simulate a GET request to /variant_recoder/human/ENST00000366667:c.803C>T
-                self.response = get_VR.VariantRecoder('human', "  rs769506022")
+                self.response = get_VR.VariantRecorder('human', "  rs769506022")
                 # Check the status code
                 self.assertEqual(self.response.status_code, 200)
                 content = self.response.json()
