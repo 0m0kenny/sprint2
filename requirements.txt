@@ -1,6 +1,2 @@
-flask
-flask_restplus
-Werkzeug
-flask_restx
 requests=2.31.0
 dicttoxml
