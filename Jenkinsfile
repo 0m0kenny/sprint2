@@ -1,18 +1,24 @@
 pipeline {
     agent any // This specifies that the pipeline can run on any available agent.
-
+    environment {
+        CODECOV_TOKEN = credentials('CODECOV_TOKEN_sprint2')
+    }
     stages {
         stage('Build') {
             steps {
-                // In this stage, you can put commands to build your project.
+                //  build project.
                 sh 'echo "Building the project..."'
             }
         }
 
-        stage('Test') {
+        stage('"Run Pytest and Codecov"') {
             steps {
-                // In this stage, you can put commands to run tests.
+                // run tests.
                 sh 'echo "Running tests..."'
+                script {
+                sh 'pytest --cov=my_application --cov-report=term tests/'
+                sh 'codecov -t $CODECOV_TOKEN -b ${BRANCH_NAME}'
+                }
             }
         }
     }
