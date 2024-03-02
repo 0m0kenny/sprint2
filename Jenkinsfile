@@ -19,7 +19,6 @@ pipeline {
                 sh 'echo "Running tests..."'
                 sh 'pip --version'
                 script {
-                    sh 'pip --install --upgrade pip'
                     sh 'pip install pytest'
                     sh 'pip install pytest-cov'
                     sh 'pytest --cov=my_application --cov-report=term tests/'
