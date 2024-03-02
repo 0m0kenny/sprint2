@@ -1,5 +1,5 @@
 import requests
-from helper_functions.user_input import content_type
+
 def request_vvdata(url):
         '''get request for variant validator'''
         return requests.get(url)
