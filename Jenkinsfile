@@ -9,13 +9,16 @@ pipeline {
                 //  build project.
                 sh 'echo "Building the project..."'
             }
-        
+        }
 
         stage('Run Pytest and Codecov') {
             steps {
                 // run tests.
                 sh 'echo "Running tests..."'
                 script {
+                    sh 'pip --install --upgrade pip'
+                    sh 'pip install pytest'
+                    sh 'pip install pytest-cov'
                     sh 'pytest --cov=my_application --cov-report=term tests/'
                     sh 'codecov -t $CODECOV_TOKEN -b ${BRANCH_NAME}'
                 }
@@ -33,4 +36,4 @@ pipeline {
             echo 'Pipeline failed. Please check the logs for details.'
         }
     }
-}}
+}
