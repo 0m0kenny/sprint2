@@ -1,5 +1,7 @@
 pipeline {
-    agent any // This specifies that the pipeline can run on any available agent.
+    agent {
+        docker { image 'python:3'}
+    } // This specifies that the pipeline can run on any available docker.
     environment {
         CODECOV_TOKEN = credentials('CODECOV_TOKEN_sprint2')
     }
@@ -15,6 +17,7 @@ pipeline {
             steps {
                 // run tests.
                 sh 'echo "Running tests..."'
+                sh 'pip --version'
                 script {
                     sh 'pip --install --upgrade pip'
                     sh 'pip install pytest'
