@@ -7,7 +7,7 @@ Below are the steps to install the package on Linux OS.
 Download the git repo
 ```bash
 $ git clone https://github.com/0m0kenny/sprint2
-$ cd variant_annotation/
+$ cd sprint2
 ```
 
 ## Create a virtual environment and install dependencies

@@ -18,7 +18,7 @@ pipeline {
             steps {
                 // run tests.
                 script {
-                    sh 'pytest --cov=my_application --cov-report=term tests/'
+                    sh 'pytest --cov=variant_annotator --cov-report=term tests/'
                     sh 'codecov -t $CODECOV_TOKEN -b ${BRANCH_NAME}'
                 }
             }

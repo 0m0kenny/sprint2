@@ -2,10 +2,11 @@
 
 ## Operation
 
-To run my_application
+To run variant_annotator
 In the enviroment terminal (see INSTALLATION.md on how to create and activate the required environment and dependencies)
 
 ```bash
+$ cd variant_annotator
 $ python __main__.py
 ```
 
@@ -16,7 +17,7 @@ Some answers are case insensitive for example: The first prompted question promp
 
 The chose allele prompt is also case insensitive, however, this can only take one allele at a time. The functionality to request multiple allele variants is under development! For now, please restart the application and choose another allele variant to get the annotation for each allele.
 
-The data can be viewed as application/json or text/xml. Once the data retrieval is successful, you will be prompted to eneter how you wish to view the file. Please enter the answer as directed by the console to avoid errors.
+The data can be viewed as application/json or text/xml. Once the data retrieval is successful, you will be prompted to enter how you wish to view the file. Please enter the answer as directed by the console to avoid errors.
 
 
 
