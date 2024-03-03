@@ -48,14 +48,13 @@ tests = ["pytest == 8.0.2", "pytest-cov[all]"]
 [project.urls]
 "Source" = "https://github.com/0m0kenny/sprint2"
 "Bug Reports" = "https://github.com/0m0kenny/sprint2/issues"
-"Documentation" = "https://readthedocs.org"
 
 
 
 [scripts]
 # Define scripts that will be available after installation, with their entry points
 # After install, these scripts will be accessible for the user to run
-my_app = "my_application.__main__.py:Redirect()"
+my_app = "variant_annotator.__main__.py:Redirect()"
 
 
 
@@ -63,7 +62,7 @@ my_app = "my_application.__main__.py:Redirect()"
 # Setuptools configuration
 [tool.setuptools]
 # Specify the main Python modules to be included in the distribution
-py-modules = ["my_application"]
+py-modules = ["variant_annotator"]
 
 # Setuptools SCM configuration
 [tool.setuptools_scm]
@@ -74,13 +73,13 @@ addopts = "--cov --cov-report html --cov-report term-missing --cov-fail-under 95
 
 #directory to do tests
 [tool.coverage.run]
-source = ["my_application"]
+source = ["variant_annotator"]
 
 # Setuptools package discovery configuration
 [tool.setuptools.packages.find]
 # Define where to look for packages (root directory)
 where = ["."]
 # Specify patterns to include and exclude for package discovery
-include = ["my_application*"]
+include = ["varaint_annotator*"]
 exclude = ["tests"]
 
