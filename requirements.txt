@@ -1,2 +1,8 @@
-requests=2.31.0
-dicttoxml
+requests==2.31.0
+dicttoxml==1.7.16
+pytest==8.0.2
+codecov==2.1.13
+codecov-cli==0.4.8
+coverage==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
