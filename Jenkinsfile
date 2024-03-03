@@ -1,5 +1,8 @@
 pipeline {
-    agent any // This specifies that the pipeline can run on any available agent.
+    agent {
+        dockerfile true
+        }
+    // This specifies that the pipeline can run on any available docker.
     environment {
         CODECOV_TOKEN = credentials('CODECOV_TOKEN_sprint2')
     }
@@ -9,12 +12,11 @@ pipeline {
                 //  build project.
                 sh 'echo "Building the project..."'
             }
-        
+        }
 
         stage('Run Pytest and Codecov') {
             steps {
                 // run tests.
-                sh 'echo "Running tests..."'
                 script {
                     sh 'pytest --cov=my_application --cov-report=term tests/'
                     sh 'codecov -t $CODECOV_TOKEN -b ${BRANCH_NAME}'
