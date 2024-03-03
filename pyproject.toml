@@ -28,18 +28,21 @@ dependencies = [
     "requests==2.31.0",
 ]
 
-#list of optional dependencies
-[project.optional-dependencies]
-test = ["pytest == 8.0.2", "pytest-cov[all]"]
+
 
 
 # Project classifiers
 classifiers = [
     "Development Status :: 3 - Alpha",
-    "Intended Audience :: Bioinformaticians",
+    "Intended Audience :: Developers",
     "Programming Language :: Python :: 3.10",
     "Topic :: Software Development :: Build Tools",
-    "License :: OSI Approved :: MIT License"]
+    "License :: OSI Approved :: MIT License"
+]
+
+#list of optional dependencies
+[project.optional-dependencies]
+tests = ["pytest == 8.0.2", "pytest-cov[all]"]
 
 # URLs associated with the project
 [project.urls]
