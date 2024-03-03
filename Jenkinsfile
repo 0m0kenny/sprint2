@@ -1,6 +1,7 @@
 pipeline {
     agent {
-        docker { image 'python:3'}
+        dockerfile true
+        }
     } // This specifies that the pipeline can run on any available docker.
     environment {
         CODECOV_TOKEN = credentials('CODECOV_TOKEN_sprint2')
